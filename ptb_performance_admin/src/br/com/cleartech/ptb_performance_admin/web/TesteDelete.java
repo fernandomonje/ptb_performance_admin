@@ -12,7 +12,7 @@ public class TesteDelete {
 		
 		Connection conn = myDao.getConnection();
 		
-		boolean deleteCarrier = myDao.deleteCarrier(conn, "0667");
+		boolean deleteCarrier = myDao.deleteCarrier(conn, "0668");
 		
 		if(deleteCarrier ) {
 			System.out.println("Data delete successed.");	

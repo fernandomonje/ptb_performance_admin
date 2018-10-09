@@ -1,11 +1,15 @@
 package br.com.cleartech.ptb_performance_admin.dao;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.cleartech.ptb_performance_admin.Carrier;
 
 public class dao {
 
@@ -209,5 +213,39 @@ public class dao {
     	return false;
     }
     
+	public List<Carrier> getCarrierList(Connection conn) {
+		List<Carrier> CarrierList = new ArrayList<Carrier>();
+		Statement stmt = null;
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM PTB_MEASURE_SPID");
+			while (rs.next()) {
+				Carrier carrier_result = new Carrier();
+				carrier_result.setSpid(rs.getString("SPID"));
+				carrier_result.setName(rs.getString("NAME"));
+				carrier_result.setStatus(rs.getInt("STATUS"));
+				CarrierList.add(carrier_result);
+			}
+		} catch (SQLException e) {
+			// TODO - Create Better error desc
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (stmt != null) {
+				// Close the statement
+				try {
+					stmt.close();
+					return CarrierList;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		
+		return null;
+		
+	}
 
 }

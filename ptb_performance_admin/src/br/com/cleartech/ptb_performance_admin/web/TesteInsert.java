@@ -12,7 +12,7 @@ public class TesteInsert {
 		
 		Connection conn = myDao.getConnection();
 		
-		boolean InsertCarrier = myDao.insertCarrier(conn, "0669", "TESTE DAO", true);
+		boolean InsertCarrier = myDao.insertCarrier(conn, "0668", "TESTE DAO", true);
 		if (InsertCarrier) {
 			System.out.println("Data insert successed.");
 		} else {
