@@ -11,6 +11,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Listagem de Prestadora</title>
+<link rel="stylesheet" type="text/css" href="default_style.css">
 </head>
 <body>
 
