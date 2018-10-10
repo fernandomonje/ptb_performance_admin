@@ -1,7 +1,6 @@
 package br.com.cleartech.ptb_performance_admin.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.List;
 

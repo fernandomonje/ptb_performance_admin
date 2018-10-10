@@ -6,6 +6,7 @@
 <html>
 <%  
 // retrieve your list from the request, with casting 
+@SuppressWarnings("unchecked")
 List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
 %>
 <head>
@@ -22,6 +23,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
                 <th>SPID</th>
                 <th>NOME</th>
                 <th>STATUS</th>
+                <th>DETALHES</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +36,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
      <td><%=carrier.getSpid()%></td>
      <td><%=carrier.getName()%></td>
      <td><%=carrier.getStatus()%></td>
+     <td><a href="/ptb_performance_admin/CarrierData?spid=<%=carrier.getSpid()%>">DETALHES</a></td>
     </tr>
 <%
 };

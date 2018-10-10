@@ -247,5 +247,40 @@ public class dao {
 		return null;
 		
 	}
+	
+	public Carrier getCarrierData(Connection conn, String spid) {
+		PreparedStatement pstmt = null;
+		Carrier carrier_result = new Carrier();
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM PTB_MEASURE_SPID WHERE SPID = ?");
+			pstmt.setString(1, spid);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				carrier_result.setSpid(rs.getString("SPID"));
+				carrier_result.setName(rs.getString("NAME"));
+				carrier_result.setStatus(rs.getInt("STATUS"));
+			}
+		} catch (SQLException e) {
+			// TODO - Create Better error desc
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (pstmt != null) {
+				// Close the statement
+				try {
+					pstmt.close();
+					return carrier_result;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		
+		return null;
+		
+	}
+	
 
 }
