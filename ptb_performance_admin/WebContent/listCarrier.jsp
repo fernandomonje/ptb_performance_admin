@@ -36,7 +36,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
      <td><%=carrier.getSpid()%></td>
      <td><%=carrier.getName()%></td>
      <td><%=carrier.getStatus()%></td>
-     <td><a href="/ptb_performance_admin/CarrierData?spid=<%=carrier.getSpid()%>">DETALHES</a></td>
+     <td><a href="<%=request.getContextPath()%>/CarrierData?spid=<%=carrier.getSpid()%>">DETALHES</a></td>
     </tr>
 <%
 };
