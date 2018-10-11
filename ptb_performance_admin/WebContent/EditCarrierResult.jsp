@@ -8,8 +8,8 @@
 // retrieve your list from the request, with casting 
 @SuppressWarnings("unchecked")
 Carrier carrier = (Carrier) request.getAttribute("Carrier");
-boolean update_status = Boolean.TRUE == request.getAttribute("update_status");
-boolean no_changes = Boolean.TRUE == request.getAttribute("no_changes");
+String update_status = (String) request.getAttribute("update_status");
+String no_changes = (String) request.getAttribute("no_changes");
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -20,11 +20,15 @@ boolean no_changes = Boolean.TRUE == request.getAttribute("no_changes");
 
 <h2> Resultado de edi&ccedil;&atilde;o de Dados de Prestadora</h2>
 
-<%if (no_changes) { %>
+<%=no_changes%>
+<%=update_status%>
+
+
+<%if (no_changes.equals("true")) { %>
 	<h3>Nenhuma informa&ccedil;&atilde;o alterada.</h3>
-<%} else if (!no_changes && update_status) { %>
+<%} else if (!no_changes.equals("true") && update_status.equals("true")) { %>
 	<h3>Altera&ccedil;&otilde;es aplicadas com sucesso.</h3>
-<%} else if (!no_changes && !update_status) {%>
+<%} else if (!no_changes.equals("true") && !update_status.equals("true")) {%>
 	<h3><font color="red"></font>Falha na atualiza&ccedil;&atilde;o dos dados.</font></h3>
 <%}; %>
 <br />

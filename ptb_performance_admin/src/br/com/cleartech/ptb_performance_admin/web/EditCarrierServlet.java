@@ -46,7 +46,8 @@ public class EditCarrierServlet extends HttpServlet{
         boolean status_changed = false;
         boolean status_bool = false;
         boolean update_status = false;
-        boolean no_changes = false;
+        String ret_status = "false";
+        String no_changes = "false";
 		dao myDao = new dao();
 		Connection conn = myDao.getConnection();
 		Carrier carrier = myDao.getCarrierData(conn, spid);
@@ -69,12 +70,15 @@ public class EditCarrierServlet extends HttpServlet{
 		} else if (!name_chaged && status_changed) {
 			update_status = myDao.updateCarrier(conn, spid, status_bool);
 		} else {
-			no_changes = true;
+			no_changes = "true";
+		}
+		if(update_status) {
+			ret_status = "true";
 		}
 		myDao.closeConnection(conn);
 		req.setAttribute("Carrier", carrier);
-		req.setAttribute("update_status", update_status);
-		req.setAttribute("no_chages", no_changes);
+		req.setAttribute("update_status", ret_status);
+		req.setAttribute("no_changes", no_changes);
 		req.getRequestDispatcher("/EditCarrierResult.jsp").forward(req,resp);
 	
 	}
