@@ -8,8 +8,8 @@
 // retrieve your list from the request, with casting 
 @SuppressWarnings("unchecked")
 Carrier carrier = (Carrier) request.getAttribute("Carrier");
-Boolean update_status = (Boolean) request.getAttribute("update_status");
-Boolean no_changes = (Boolean) request.getAttribute("no_changes");
+boolean update_status = Boolean.TRUE == request.getAttribute("update_status");
+boolean no_changes = Boolean.TRUE == request.getAttribute("no_changes");
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

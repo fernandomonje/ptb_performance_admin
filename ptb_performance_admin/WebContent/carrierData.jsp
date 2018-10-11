@@ -31,6 +31,6 @@ NOME&nbsp;:&nbsp;<input type="text" value="<%=carrier.getName()%>" size="30" dis
 </form>
 <br />
 <br />
-<input type="button" value="Editar" onclick="window.location='<%=request.getContextPath()%>/EditCarrier?spid=<%=carrier.getSpid()%>';">&nbsp;nbsp;<input type="button" value="voltar" onclick="window.location='<%=request.getContextPath()%>/ListCarrier';">
+<input type="button" value="Editar" onclick="window.location='<%=request.getContextPath()%>/EditCarrier?spid=<%=carrier.getSpid()%>';">&nbsp;&nbsp;<input type="button" value="voltar" onclick="window.location='<%=request.getContextPath()%>/ListCarrier';">
 </body>
 </html>

@@ -14,8 +14,8 @@ import br.com.cleartech.ptb_performance_admin.Carrier;
 import br.com.cleartech.ptb_performance_admin.dao.dao;
 
 
-@WebServlet (urlPatterns="/ListCarrier")
-public class ListCarrier extends HttpServlet{
+@WebServlet (urlPatterns="/CarrierData")
+public class CarrierDataServlet extends HttpServlet{
 	
 	/**
 	 * 
@@ -25,12 +25,13 @@ public class ListCarrier extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String spid = req.getParameter("spid");
 		dao myDao = new dao();
 		Connection conn = myDao.getConnection();
-		List<Carrier> CarrierList = myDao.getCarrierList(conn); 
+		Carrier carrier = myDao.getCarrierData(conn, spid); 
 		myDao.closeConnection(conn);
-		req.setAttribute("listCarrier", CarrierList);
-		req.getRequestDispatcher("/listCarrier.jsp").forward(req,resp);
+		req.setAttribute("Carrier", carrier);
+		req.getRequestDispatcher("/carrierData.jsp").forward(req,resp);
 	
 	}
 

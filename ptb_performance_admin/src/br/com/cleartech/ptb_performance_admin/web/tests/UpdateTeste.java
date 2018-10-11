@@ -1,4 +1,4 @@
-package br.com.cleartech.ptb_performance_admin.web;
+package br.com.cleartech.ptb_performance_admin.web.tests;
 
 import java.sql.Connection;
 
