@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Inclus&atilde;o de prestadora</title>
+<link rel="stylesheet" type="text/css" href="default_style.css">
+</head>
+<body>
+
+<h2>Inclus&atilde;o de Prestadora</h2>
+
+
+<form action="InsertCarrier" method="POST">
+
+SPID: <input type="text" size="10" id="spid" name="spid" required minlength="4" maxlength="4"><br /><br />
+NOME: <input type="text" size="20" id="name" name="name" required minlength="1" maxlength="100"><br /><br />
+STATUS: <input type="radio" name="status" value="true">&nbsp;ATIVA&nbsp;&nbsp;&nbsp;<input type="radio" name="status" value="false">&nbsp;INATIVA
+<br />
+<br />
+
+<input type="submit" value="Enviar">&nbsp;&nbsp;<input type="button" value="voltar" onclick="window.location='<%=request.getContextPath()%>/ListaSPID';">
+
+</form>
+
+</body>
+</html>
