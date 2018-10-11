@@ -17,24 +17,20 @@ Carrier carrier = (Carrier) request.getAttribute("Carrier");
 <body>
 
 <h2>Dados de Prestadora</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>SPID</th>
-                <th>NOME</th>
-                <th>STATUS</th>
-            </tr>
-        </thead>
-        <tbody>
-	 <tr>
-     <td><%=carrier.getSpid()%></td>
-     <td><%=carrier.getName()%></td>
-     <td><%=carrier.getStatus()%></td>
-    </tr>
-</tbody>
-</table>
+
+
+<form action="">
+SPID&nbsp;:&nbsp;<input type="text" value="<%=carrier.getSpid()%>" size="10" disabled><br />
+NOME&nbsp;:&nbsp;<input type="text" value="<%=carrier.getName()%>" size="30" disabled><br />
+<%String carrier_status = String.valueOf(carrier.getStatus());%>
+<%if (carrier_status.equals("1")) { %>
+	STATUS&nbsp;:&nbsp;<input type="radio" name="status" value="true" checked="checked" disabled>&nbsp;ATIVA&nbsp;&nbsp;&nbsp;<input type="radio" name="status" value="false" disabled>&nbsp;INATIVA
+<%} else { %>
+	STATUS&nbsp;:&nbsp;<input type="radio" name="status" value="true" disabled>&nbsp;ATIVA&nbsp;&nbsp;&nbsp;<input type="radio" name="status" value="false" checked="checked" disabled>&nbsp;INATIVA
+<%}; %>
+</form>
 <br />
 <br />
-<input type="button" value="voltar" onclick="window.location='<%=request.getContextPath()%>/ListaSPID';">
+<input type="button" value="Editar" onclick="window.location='<%=request.getContextPath()%>/EditCarrier?spid=<%=carrier.getSpid()%>';">&nbsp;nbsp;<input type="button" value="voltar" onclick="window.location='<%=request.getContextPath()%>/ListCarrier';">
 </body>
 </html>

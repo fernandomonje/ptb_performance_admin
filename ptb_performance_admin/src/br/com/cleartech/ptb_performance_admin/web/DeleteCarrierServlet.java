@@ -2,7 +2,6 @@ package br.com.cleartech.ptb_performance_admin.web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +13,8 @@ import br.com.cleartech.ptb_performance_admin.Carrier;
 import br.com.cleartech.ptb_performance_admin.dao.dao;
 
 
-@WebServlet (urlPatterns="/ListCarrier")
-public class ListCarrier extends HttpServlet{
+@WebServlet (urlPatterns="/DeleteCarrier")
+public class DeleteCarrierServlet extends HttpServlet{
 	
 	/**
 	 * 
@@ -25,12 +24,25 @@ public class ListCarrier extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.getRequestDispatcher("/DeleteCarrier.html").forward(req,resp);
+	
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String spid = req.getParameter("spid");
+        
 		dao myDao = new dao();
 		Connection conn = myDao.getConnection();
-		List<Carrier> CarrierList = myDao.getCarrierList(conn); 
+		boolean delete_status = myDao.deleteCarrier(conn, spid);
+		String ret_status = "false";
+		if (delete_status) {
+			ret_status = "true";
+		}
 		myDao.closeConnection(conn);
-		req.setAttribute("listCarrier", CarrierList);
-		req.getRequestDispatcher("/listCarrier.jsp").forward(req,resp);
+		req.setAttribute("delete_status", ret_status);
+		req.getRequestDispatcher("/DeleteCarrier.jsp").forward(req,resp);
 	
 	}
 

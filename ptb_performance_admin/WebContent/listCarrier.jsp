@@ -23,7 +23,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
                 <th>SPID</th>
                 <th>NOME</th>
                 <th>STATUS</th>
-                <th>DETALHES</th>
+                <th>A&Ccedil;&Otilde;ES</th>                
             </tr>
         </thead>
         <tbody>
@@ -36,12 +36,20 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
      <td><%=carrier.getSpid()%></td>
      <td><%=carrier.getName()%></td>
      <td><%=carrier.getStatus()%></td>
-     <td><a href="<%=request.getContextPath()%>/CarrierData?spid=<%=carrier.getSpid()%>">DETALHES</a></td>
+     <td>
+     	<input type="button" value="Detalhes" onclick="location.href='<%=request.getContextPath()%>/CarrierData?spid=<%=carrier.getSpid()%>';">
+     	<form action="<%=request.getContextPath()%>/DeleteCarrier" method="POST">
+     		<input type="hidden" value="<%=carrier.getSpid()%>" name="spid">
+     		<input type="submit" value="Excluir">
+     	</form>
+     </td>
     </tr>
 <%
 };
 %>
 </tbody>
 </table>
+     	<input type="button" value="Incluir Operadora" onclick="location.href='<%=request.getContextPath()%>/InsertCarrier';">
+
 </body>
 </html>
