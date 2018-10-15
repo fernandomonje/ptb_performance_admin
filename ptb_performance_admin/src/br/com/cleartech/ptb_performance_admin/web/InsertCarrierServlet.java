@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.cleartech.ptb_performance_admin.Carrier;
-import br.com.cleartech.ptb_performance_admin.dao.dao;
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
 
 @WebServlet (urlPatterns="/InsertCarrier")
@@ -19,7 +19,8 @@ public class InsertCarrierServlet extends HttpServlet{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8788977022429259626L;
+	private static final long serialVersionUID = 831376228153712209L;
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +40,7 @@ public class InsertCarrierServlet extends HttpServlet{
         if (status_str.equals("true")) {
         	status = true;
         }
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		boolean insert_status = myDao.insertCarrier(conn, spid, name, status);
 		String ret_status = "false";

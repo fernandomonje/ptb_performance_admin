@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.cleartech.ptb_performance_admin.Carrier;
-import br.com.cleartech.ptb_performance_admin.dao.dao;
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
 
 @WebServlet (urlPatterns="/DeleteCarrier")
@@ -19,7 +19,8 @@ public class DeleteCarrierServlet extends HttpServlet{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8788977022429259626L;
+	private static final long serialVersionUID = 633653621733601724L;
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +34,7 @@ public class DeleteCarrierServlet extends HttpServlet{
 
         String spid = req.getParameter("spid");
         
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		boolean delete_status = myDao.deleteCarrier(conn, spid);
 		String ret_status = "false";

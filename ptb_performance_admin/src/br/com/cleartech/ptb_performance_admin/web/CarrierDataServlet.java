@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.cleartech.ptb_performance_admin.Carrier;
-import br.com.cleartech.ptb_performance_admin.dao.dao;
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
 
 @WebServlet (urlPatterns="/CarrierData")
@@ -26,12 +26,12 @@ public class CarrierDataServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String spid = req.getParameter("spid");
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		Carrier carrier = myDao.getCarrierData(conn, spid); 
 		myDao.closeConnection(conn);
 		req.setAttribute("Carrier", carrier);
-		req.getRequestDispatcher("/carrierData.jsp").forward(req,resp);
+		req.getRequestDispatcher("/CarrierData.jsp").forward(req,resp);
 	
 	}
 

@@ -2,13 +2,13 @@ package br.com.cleartech.ptb_performance_admin.web.tests;
 
 import java.sql.Connection;
 
-import br.com.cleartech.ptb_performance_admin.dao.dao;
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
 public class TesteInsert {
 	
 	public static void main(String[] args) {
 		
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		
 		Connection conn = myDao.getConnection();
 		

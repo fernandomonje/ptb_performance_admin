@@ -11,22 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.cleartech.ptb_performance_admin.Carrier;
-import br.com.cleartech.ptb_performance_admin.dao.dao;
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
 
 @WebServlet (urlPatterns="/EditCarrier")
 public class EditCarrierServlet extends HttpServlet{
 	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8788977022429259626L;
+	
+	private static final long serialVersionUID = -8216465516159611136L;
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String spid = req.getParameter("spid");
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		Carrier carrier = myDao.getCarrierData(conn, spid); 
 		myDao.closeConnection(conn);
@@ -48,7 +51,7 @@ public class EditCarrierServlet extends HttpServlet{
         boolean update_status = false;
         String ret_status = "false";
         String no_changes = "false";
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		Carrier carrier = myDao.getCarrierData(conn, spid);
 		if (String.valueOf(carrier.getStatus()).equals("1")) {

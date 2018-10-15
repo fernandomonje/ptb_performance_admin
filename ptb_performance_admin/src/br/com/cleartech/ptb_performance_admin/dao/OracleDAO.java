@@ -12,7 +12,7 @@ import java.util.List;
 
 import br.com.cleartech.ptb_performance_admin.Carrier;
 
-public class dao {
+public class OracleDAO {
 
     private final String db_user = "scada";
     private final String db_pass = "sca#0406";

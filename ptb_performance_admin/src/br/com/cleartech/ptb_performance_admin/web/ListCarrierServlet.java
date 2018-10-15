@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.cleartech.ptb_performance_admin.Carrier;
-import br.com.cleartech.ptb_performance_admin.dao.dao;
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
 
 @WebServlet (urlPatterns="/ListCarrier")
@@ -20,17 +20,17 @@ public class ListCarrierServlet extends HttpServlet{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8788977022429259626L;
+	private static final long serialVersionUID = 7272522034504302841L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		dao myDao = new dao();
+		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		List<Carrier> CarrierList = myDao.getCarrierList(conn); 
 		myDao.closeConnection(conn);
 		req.setAttribute("listCarrier", CarrierList);
-		req.getRequestDispatcher("/listCarrier.jsp").forward(req,resp);
+		req.getRequestDispatcher("/ListCarrier.jsp").forward(req,resp);
 	
 	}
 
