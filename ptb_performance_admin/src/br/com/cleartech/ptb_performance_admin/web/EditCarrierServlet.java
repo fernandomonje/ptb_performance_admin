@@ -2,7 +2,6 @@ package br.com.cleartech.ptb_performance_admin.web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

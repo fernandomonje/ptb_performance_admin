@@ -20,9 +20,6 @@ String no_changes = (String) request.getAttribute("no_changes");
 
 <h2> Resultado de edi&ccedil;&atilde;o de Dados de Prestadora</h2>
 
-<%=no_changes%>
-<%=update_status%>
-
 
 <%if (no_changes.equals("true")) { %>
 	<h3>Nenhuma informa&ccedil;&atilde;o alterada.</h3>

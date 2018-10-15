@@ -20,7 +20,7 @@ public class ListCarrierServlet extends HttpServlet{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7272522034504302841L;
+	private static final long serialVersionUID = 7272523035504302841L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
