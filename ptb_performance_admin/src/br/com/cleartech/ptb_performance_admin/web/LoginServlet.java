@@ -30,8 +30,6 @@ public class LoginServlet extends HttpServlet {
     	boolean auth_status = false;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
         //Map<String, String> messages = new HashMap<String, String>();
 
         if (username == null || username.isEmpty()) {
@@ -46,18 +44,13 @@ public class LoginServlet extends HttpServlet {
         	
         	LoginLDAP auth = new LoginLDAP();
         	try {
-        		System.out.println("Iniciando Auth");
 				auth_status = auth.authUser(username, password);
-				System.out.println(String.valueOf(auth_status));
 			} catch (Exception e) {
-				System.out.println("Falha no Auth");
-				
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
             if (auth_status) {
-            	System.out.println("Usuario Logado.");
                 request.getSession().setAttribute("username", username);
                 response.sendRedirect(request.getContextPath() + "/ListCarrier");
                 return;
