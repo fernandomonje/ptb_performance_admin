@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cleartech.ptb_performance_admin.Carrier;
 import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
+import br.com.cleartech.ptb_performance_admin.util.Carrier;
 
 
 @WebServlet (urlPatterns="/CarrierData")

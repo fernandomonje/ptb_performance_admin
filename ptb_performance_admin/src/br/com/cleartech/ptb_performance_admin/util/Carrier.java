@@ -1,4 +1,4 @@
-package br.com.cleartech.ptb_performance_admin;
+package br.com.cleartech.ptb_performance_admin.util;
 
 public class Carrier {
 	

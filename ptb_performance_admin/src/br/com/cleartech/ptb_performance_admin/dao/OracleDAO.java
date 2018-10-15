@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.cleartech.ptb_performance_admin.Carrier;
+import br.com.cleartech.ptb_performance_admin.util.Carrier;
 
 public class OracleDAO {
 
