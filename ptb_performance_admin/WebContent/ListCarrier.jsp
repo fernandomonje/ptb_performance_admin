@@ -51,6 +51,9 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
 </table>
 <br />
 <input type="button" value="Incluir Operadora" onclick="location.href='<%=request.getContextPath()%>/InsertCarrier';">
+<br />
+
+<input type="button" value="Logout" onclick="location.href='<%=request.getContextPath()%>/Logout';">
 
 </body>
 </html>

@@ -20,7 +20,7 @@ Carrier carrier = (Carrier) request.getAttribute("Carrier");
 
 
 <form action="EditCarrier" method="POST"">
-SPID&nbsp;:&nbsp;<input type="text" value="<%=carrier.getSpid()%>" name="spid" size="10" ><br />
+SPID&nbsp;:&nbsp;<input type="text" value="<%=carrier.getSpid()%>" name="spid" size="10" disabled ><br />
 NOME&nbsp;:&nbsp;<input type="text" value="<%=carrier.getName()%>" name="name" size="30" ><br />
 <%String carrier_status = String.valueOf(carrier.getStatus());%>
 <%if (carrier_status.equals("1")) { %>
