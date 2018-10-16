@@ -16,17 +16,19 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class LoginFilter implements Filter {
 
+	
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {    
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
+        boolean isStaticResource = request.getRequestURI().startsWith(request.getContextPath() + "/resources/");
         String loginURI = request.getContextPath() + "/Login";
 
         boolean loggedIn = session != null && session.getAttribute("username") != null;
         boolean loginRequest = request.getRequestURI().equals(loginURI);
 
-        if (loggedIn || loginRequest) {
+        if (loggedIn || loginRequest || isStaticResource) {
             chain.doFilter(request, response);
         } else {
             response.sendRedirect(loginURI);
