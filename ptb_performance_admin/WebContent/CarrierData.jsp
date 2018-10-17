@@ -2,21 +2,22 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import =" java.util.List"%>
 <%@ page import =" br.com.cleartech.ptb_performance_admin.util.Carrier"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <%  
 // retrieve your list from the request, with casting 
 @SuppressWarnings("unchecked")
 Carrier carrier = (Carrier) request.getAttribute("Carrier");
 %>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Dados de Prestadora - SPID[<%=carrier.getSpid()%>]</title>
-<link rel="stylesheet" type="text/css" href="default_style.css">
-</head>
-<body>
 
-<h2>Dados de Prestadora</h2>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal">X</button>
+  <h1>Dados de Prestadora - SPID[<%=carrier.getSpid()%>]</h1>
+</div>
+<div class="modal-body">
+  <div class="panel panel-default">
+    <div class="panel-heading text-center">
+      Dados de Prestadora
+    </div>
+    <div class="panel-body">
 
 
 <form action="">
@@ -32,5 +33,12 @@ NOME&nbsp;:&nbsp;<input type="text" value="<%=carrier.getName()%>" size="30" dis
 <br />
 <br />
 <input type="button" value="Editar" onclick="window.location='<%=request.getContextPath()%>/EditCarrier?spid=<%=carrier.getSpid()%>';">&nbsp;&nbsp;<input type="button" value="voltar" onclick="window.location='<%=request.getContextPath()%>/ListCarrier';">
-</body>
-</html>
+</div>
+  </div>
+  <div class="modal-footer">
+    <div class="panel-footer">
+      <input type="button" value="Find Employee" id="empbutton" />
+      <div class="col-xs-10" id="lblstatus"></div>
+    </div>
+  </div>
+</div>
