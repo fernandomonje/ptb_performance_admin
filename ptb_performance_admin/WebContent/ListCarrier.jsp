@@ -58,12 +58,9 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
      <td><%=carrier.getName()%></td>
      <td><%=carrier.getStatus()%></td>
      <td>
-     	<a class="nav-link" href="<%=request.getContextPath()%>/CarrierData?spid=<%=carrier.getSpid()%>" data-toggle="modal" data-target="#theModal">Modal</a>   	
-     	<input class="btn btn-primary btn-sm" type="button" value="Detalhes" onclick="location.href='<%=request.getContextPath()%>/CarrierData?spid=<%=carrier.getSpid()%>';">
-     	<form action="<%=request.getContextPath()%>/DeleteCarrier" method="POST">
-     		<input type="hidden" value="<%=carrier.getSpid()%>" name="spid">
-     		<input class="btn btn-secondary btn-sm" type="submit" value="Excluir">
-     	</form>
+     	<a href="<%=request.getContextPath()%>/CarrierData?spid=<%=carrier.getSpid()%>" data-toggle="modal" data-target="#carrierDetailModal"><span data-feather="edit"></span></a>
+     	<a href="#" data-toggle="modal" data-target="#ModalDeleteConfirm" data-spid="<%=carrier.getSpid()%>"><span data-feather="trash-2"></span></a>   	
+     	
      </td>
     </tr>
  <%} %>
@@ -73,11 +70,33 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
         </main>
       </div>
     </div>
-<div class="modal fade" id="theModal" tabindex="-1" role="dialog">
+    
+ <div class="modal fade" id="ModalDeleteConfirm" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">My modal</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Confirmar Exclus&atilde;o de SPID.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                
+                <form action="<%=request.getContextPath()%>/DeleteCarrier" method="POST">
+                	<input type="hidden" id="DeleteSpid" value="" name="spid">
+                	<input type="submit" class="btn btn-primary" value="Confirmar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="modal fade" id="carrierDetailModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes de Prestadora</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -106,8 +125,13 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
       feather.replace()
     </script>
     <script>
-    $('#theModal').on('show.bs.modal', function (e) {
+    $('#carrierDetailModal').on('show.bs.modal', function (e) {
         $(this).find('.modal-content').load(e.relatedTarget.href);
+    });
+    $('#ModalDeleteConfirm').on('show.bs.modal', function (e) {
+    	var spid = $(e.relatedTarget).data("spid");
+        $(this).find('.modal-title ').text("Confirmar exclusao do SPID " + spid + "?");
+        $("#DeleteSpid").val(spid);
     });
     </script>
 
