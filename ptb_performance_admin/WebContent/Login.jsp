@@ -14,7 +14,7 @@
 
 
 <form action="Login" method="POST" class="form-signin">
-      <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Cleartech.</h1>
       <label for="username" class="sr-only">Usu&aacute;rio</label>
       <input type="text" id="username" name="username"class="form-control" placeholder="User" required autofocus>
       <label for="password" class="sr-only">Senha</label>
