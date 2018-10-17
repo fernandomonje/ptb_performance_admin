@@ -12,7 +12,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Listagem de Prestadora</title>
+<title>PTB Performance Admin</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link href="resources/dashboard.css" rel="stylesheet">
@@ -119,6 +119,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
       feather.replace()
     </script>
     <script>
+    var username = "<%=request.getSession().getAttribute("username")%>";
     $('#carrierDetailModal').on('show.bs.modal', function (e) {
         $(this).find('.modal-content').load(e.relatedTarget.href);
     });
@@ -127,7 +128,10 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
         $(this).find('.modal-title ').text("Confirmar exclusao do SPID " + spid + "?");
         $("#DeleteSpid").val(spid);
     });
-    </script>
+    $( document ).ready(function() {
+        $("#UserHeader").text("Logado como: " + username);
+    });
+	</script>
 
   </body>
 </html>
