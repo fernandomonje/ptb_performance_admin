@@ -23,7 +23,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PTB Performance Admin</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sair</a>
+          <a class="nav-link" href="<%=request.getContextPath()%>/Logout">Sair</a>
         </li>
       </ul>
     </nav>
@@ -40,7 +40,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="<%=request.getContextPath()%>/InsertCarrier">
                   <span data-feather="file"></span>
                   Nova Operadora
                 </a>
@@ -94,12 +94,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
     </tr>
  <%} %>
               </tbody>
-            </table>
-             <input class="btn btn-primary btn-lg" type="button" value="Incluir Operadora" onclick="location.href='<%=request.getContextPath()%>/InsertCarrier';"><br />
-            
-            
-			<input class="btn btn-secondary btn-lg" type="button" value="Logout" onclick="location.href='<%=request.getContextPath()%>/Logout';">
-            
+            </table>                        
           </div>
         </main>
       </div>
