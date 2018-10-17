@@ -62,7 +62,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
               </button>
             </div>
           </div>
-
+    
           <h2>Título da seção</h2>
           <div class="table-responsive">
             <table class="table table-striped table-sm">
