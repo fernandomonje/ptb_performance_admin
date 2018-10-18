@@ -19,7 +19,7 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
 </head>
 
   <body>
-    <%@include  file="resources/BaseTheme.html" %>
+    <%@include  file="resources/baseTheme.html" %>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -65,73 +65,12 @@ List<Carrier> CarrierList = (List<Carrier>) request.getAttribute("listCarrier");
       </div>
     </div>
     
- <div class="modal fade" id="ModalDeleteConfirm" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmar Exclus&atilde;o de SPID.</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                
-                <form action="<%=request.getContextPath()%>/DeleteCarrier" method="POST">
-                	<input type="hidden" id="DeleteSpid" value="" name="spid">
-                	<input type="submit" class="btn btn-primary" value="Confirmar">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include  file="resources/confirmDeleteModal.html" %>
+
+<%@include  file="resources/carrierDetailModal.html" %>
+<%@include  file="resources/defaulScripts.html" %>
     
-<div class="modal fade" id="carrierDetailModal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalhes de Prestadora</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-    <!-- Principal JavaScript do Bootstrap
-    ================================================== -->
-    <!-- Foi colocado no final para a página carregar mais rápido -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-    <!-- Ícones -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-      feather.replace()
-    </script>
-    <script>
-    var username = "<%=request.getSession().getAttribute("username")%>";
-    $('#carrierDetailModal').on('show.bs.modal', function (e) {
-        $(this).find('.modal-content').load(e.relatedTarget.href);
-    });
-    $('#ModalDeleteConfirm').on('show.bs.modal', function (e) {
-    	var spid = $(e.relatedTarget).data("spid");
-        $(this).find('.modal-title ').text("Confirmar exclusao do SPID " + spid + "?");
-        $("#DeleteSpid").val(spid);
-    });
-    $( document ).ready(function() {
-        $("#UserHeader").text("Logado como: " + username);
-    });
-	</script>
 
   </body>
 </html>
