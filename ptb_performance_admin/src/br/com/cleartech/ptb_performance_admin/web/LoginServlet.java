@@ -30,24 +30,24 @@ public class LoginServlet extends HttpServlet {
     	boolean auth_status = false;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        //Map<String, String> messages = new HashMap<String, String>();
+        Map<String, String> messages = new HashMap<String, String>();
 
         if (username == null || username.isEmpty()) {
-            //messages.put("username", "Please enter username");
+            messages.put("username", "Preencha o usuario.");
         }
 
         if (password == null || password.isEmpty()) {
-            //messages.put("password", "Please enter password");
+            messages.put("password", "Preencha a senha.");
         }
 
-     //   if (messages.isEmpty()) {
+        if (messages.isEmpty()) {
         	
         	LoginLDAP auth = new LoginLDAP();
         	try {
 				auth_status = auth.authUser(username, password);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e.getMessage());
+				
 			}
 
             if (auth_status) {
@@ -56,11 +56,11 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/Home");
                 return;
             } else {
-                //messages.put("login", "Unknown login, please try again");
+                messages.put("login", "Falha no Login, tente novamente.");
             }  
-    //    }
+        }
 
-        request.setAttribute("messages", "Falha No Login");
+        request.setAttribute("messages", messages);
         request.getRequestDispatcher("/Login.jsp").forward(request, response);
     }
 

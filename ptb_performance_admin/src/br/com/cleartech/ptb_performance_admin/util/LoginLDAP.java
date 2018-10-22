@@ -32,8 +32,7 @@ public class LoginLDAP {
         		props.put(Context.SECURITY_AUTHENTICATION, "simple");
         		props.put("java.naming.ldap.factory.socket", "br.com.cleartech.ptb_performance_admin.util.LDAPSSLHelperSocketFactory");         
         	}
-
-        	InitialDirContext context = new InitialDirContext(props);
+       		InitialDirContext context = new InitialDirContext(props);
         	try {
         		SearchControls ctrls = new SearchControls();
         		ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
