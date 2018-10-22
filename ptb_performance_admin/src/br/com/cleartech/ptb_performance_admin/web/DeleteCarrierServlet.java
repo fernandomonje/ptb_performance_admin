@@ -40,9 +40,16 @@ public class DeleteCarrierServlet extends HttpServlet{
 			ret_status = "true";
 		}
 		myDao.closeConnection(conn);
-		req.setAttribute("delete_status", ret_status);
-		req.getRequestDispatcher("/DeleteCarrier.jsp").forward(req,resp);
-	
+		
+		String jsonReturn;
+		jsonReturn = "{\n";
+		jsonReturn += "	\"status\" : \"" + ret_status + "\",\n";
+		jsonReturn += "	\"spid\" : \"" + spid + "\"\n";
+		jsonReturn += "}";
+		
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(jsonReturn);
 	}
 
 }

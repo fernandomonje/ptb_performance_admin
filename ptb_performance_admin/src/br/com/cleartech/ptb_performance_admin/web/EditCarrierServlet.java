@@ -78,10 +78,16 @@ public class EditCarrierServlet extends HttpServlet{
 			ret_status = "true";
 		}
 		myDao.closeConnection(conn);
-		req.setAttribute("Carrier", carrier);
-		req.setAttribute("update_status", ret_status);
-		req.setAttribute("no_changes", no_changes);
-		req.getRequestDispatcher("/EditCarrierResult.jsp").forward(req,resp);
+		String jsonReturn;
+		jsonReturn = "{\n";
+		jsonReturn += "	\"status\" : \"" + ret_status + "\",\n";
+		jsonReturn += "	\"no_changes\" : \"" + no_changes + "\",\n";
+		jsonReturn += "	\"spid\" : \"" + spid + "\"\n";
+		jsonReturn += "}";
+		
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(jsonReturn);
 	
 	}
 	

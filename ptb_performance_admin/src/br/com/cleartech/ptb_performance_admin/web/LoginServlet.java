@@ -52,7 +52,8 @@ public class LoginServlet extends HttpServlet {
 
             if (auth_status) {
                 request.getSession().setAttribute("username", username);
-                response.sendRedirect(request.getContextPath() + "/ListCarrier");
+                request.getSession().setMaxInactiveInterval(600);
+                response.sendRedirect(request.getContextPath() + "/Home");
                 return;
             } else {
                 //messages.put("login", "Unknown login, please try again");

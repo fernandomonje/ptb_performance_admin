@@ -29,8 +29,28 @@ public class ListCarrierServlet extends HttpServlet{
 		Connection conn = myDao.getConnection();
 		List<Carrier> CarrierList = myDao.getCarrierList(conn); 
 		myDao.closeConnection(conn);
-		req.setAttribute("listCarrier", CarrierList);
-		req.getRequestDispatcher("/ListCarrier.jsp").forward(req,resp);
+		
+		String CarrierListJson = "{\n";
+		CarrierListJson +=       "	\"Carrier\": [\n";
+		for(int i = 0; i < CarrierList.size(); i++) {
+            Carrier carrier = new Carrier();
+            carrier = CarrierList.get(i);
+            CarrierListJson +=       "		{\n";
+            CarrierListJson +=       "			\"spid\": \"" + carrier.getSpid()+ "\",\n";
+            CarrierListJson +=       "			\"name\": \"" + carrier.getName() + "\",\n";
+            CarrierListJson +=       "			\"status\": \"" + carrier.getStatus() + "\"\n";
+            if(i == (CarrierList.size() - 1)) {
+            	CarrierListJson +=       "		}\n";
+            } else {
+            	CarrierListJson +=       "		},\n";
+            }
+            
+		}
+		CarrierListJson +=       "	]\n";
+		CarrierListJson +=       "}\n";
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(CarrierListJson);
 	
 	}
 

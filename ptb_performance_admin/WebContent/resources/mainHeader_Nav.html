@@ -1,17 +1,16 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PTB Performance Admin</a>
-       <ul class="navbar-nav px-3"> 	
-       	<li class="nav-item text-nowrap">
-	       	<span class="navbar-text" id="UserHeader"></span>
+       <ul class="navbar-nav mr-3"> 	
+       	<li class="nav-item">
+	       	<i class="navbar-text" id="UserHeader"></i>
    	    </li>
       </ul>
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
+      <ul class="navbar-nav mr-4"> 
+      	<li class="nav-item">
           <a class="nav-link" href="<%=request.getContextPath()%>/Logout">Sair</a>
         </li>
-      </ul>
-    </nav>
-
+      </ul>      
+</nav>
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -24,7 +23,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/InsertCarrier">
+                <a href="#" class="nav-link" data-toggle="modal" data-target="#insertCarrierModal">
                   <span data-feather="file"></span>
                   Nova Operadora
                 </a>

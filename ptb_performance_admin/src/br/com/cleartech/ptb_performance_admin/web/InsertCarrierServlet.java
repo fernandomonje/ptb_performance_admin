@@ -47,8 +47,16 @@ public class InsertCarrierServlet extends HttpServlet{
 			ret_status = "true";
 		}
 		myDao.closeConnection(conn);
-		req.setAttribute("insert_status", ret_status);
-		req.getRequestDispatcher("/InsertCarrier.jsp").forward(req,resp);
+		
+		String jsonReturn;
+		jsonReturn = "{\n";
+		jsonReturn += "	\"status\" : \"" + ret_status + "\",\n";
+		jsonReturn += "	\"spid\" : \"" + spid + "\"\n";
+		jsonReturn += "}";
+		
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(jsonReturn);
 	
 	}
 

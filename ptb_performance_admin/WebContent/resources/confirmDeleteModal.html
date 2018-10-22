@@ -8,12 +8,8 @@
                 </button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                
-                <form action="<%=request.getContextPath()%>/DeleteCarrier" method="POST">
-                	<input type="hidden" id="DeleteSpid" value="" name="spid">
-                	<input type="submit" class="btn btn-primary" value="Confirmar">
-                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>             
+               	<button class="btn btn-danger" id="DeleteConfirm" data-spid="spid">Confirmar</button>
             </div>
         </div>
     </div>
