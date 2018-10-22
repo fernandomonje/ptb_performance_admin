@@ -7,20 +7,21 @@
 </head>
 <body>
 
-<h2>Inclus&atilde;o de Prestadora</h2>
+	<h2>Inclus&atilde;o de Prestadora</h2>
 
 
-<form action="InsertCarrier" method="POST">
+	<form action="InsertCarrier" method="POST">
 
-SPID: <input type="text" size="10" id="spid" name="spid" required minlength="4" maxlength="4"><br /><br />
-NOME: <input type="text" size="20" id="name" name="name" required minlength="1" maxlength="100"><br /><br />
-STATUS: <input type="radio" name="status" value="true">&nbsp;ATIVA&nbsp;&nbsp;&nbsp;<input type="radio" name="status" value="false">&nbsp;INATIVA
-<br />
-<br />
+		SPID: <input type="text" size="10" id="spid" name="spid" required
+			minlength="4" maxlength="4"><br />
+		<br /> NOME: <input type="text" size="20" id="name" name="name"
+			required minlength="1" maxlength="100"><br />
+		<br /> STATUS: <input type="radio" name="status" value="true">&nbsp;ATIVA&nbsp;&nbsp;&nbsp;<input
+			type="radio" name="status" value="false">&nbsp;INATIVA <br />
+		<br /> <input type="submit" value="Enviar">&nbsp;&nbsp;<input
+			type="button" value="voltar" onclick="window.location='ListCarrier';">
 
-<input type="submit" value="Enviar">&nbsp;&nbsp;<input type="button" value="voltar" onclick="window.location='ListCarrier';">
-
-</form>
+	</form>
 
 </body>
 </html>

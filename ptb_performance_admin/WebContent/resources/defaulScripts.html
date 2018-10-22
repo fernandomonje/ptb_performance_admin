@@ -1,177 +1,280 @@
-    <!-- Principal JavaScript do Bootstrap
-    ================================================== -->
-    <!-- Foi colocado no final para a página carregar mais rápido -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"  crossorigin="anonymous"></script>
-	<script src="https:////cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 
-    <!-- Ícones -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-    var username = "<%=request.getSession().getAttribute("username")%>";
-    
-    $('#carrierDetailModal').on('show.bs.modal', function (e) {
-    	$("#EditCarrier").off("click");
-		var carrierJsonUrl = "CarrierData";
-		$("#staticSPID").prop("readonly", true);
-		$("#staticName").prop("readonly", true);
-		var $radios = $("input:radio[name=carrierStatus]");
-		$radios.filter("[value=true]").prop("disabled", true);
-		$radios.filter("[value=false]").prop("disabled", true);
-		$("#EditCarrier").removeClass("btn-danger").addClass("btn-primary");
-		$("#EditCarrier").text("Editar");
-		$("#EditCarrier").on("click", function(e) {
-			$("#staticName").removeAttr("readonly");
-			var $radios = $("input:radio[name=carrierStatus]");
-			$radios.filter("[value=true]").prop("disabled", false);
-			$radios.filter("[value=false]").prop("disabled", false);
-			$("#EditCarrier").removeClass("btn-primary").addClass("btn-danger");
-			$("#EditCarrier").text("Salvar");
-			$(this).on("click", function () {
-				var CarrierEditUrl = "EditCarrier";
-				$.post(CarrierEditUrl, { spid: $("#staticSPID").val(), 
-						 name: $("#staticName").val(), 
-						 status: $( "input[type=radio][name=carrierStatus]:checked" ).val()})
-					.done(function(data) {
-						$("#carrierDetailModal").modal("toggle");
-						$("#mainTable").trigger( "refresh");
+<!-- Principal JavaScript do Bootstrap
+    ================================================== -->
+<!-- Foi colocado no final para a página carregar mais rápido -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+<script
+	src="https:////cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
+	crossorigin="anonymous"></script>
+
+<!-- Ícones -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+	var username = "<%=request.getSession().getAttribute("username")%>";
+
+	$('#carrierDetailModal')
+			.on(
+					'show.bs.modal',
+					function(e) {
+						$("#EditCarrier").off("click");
+						var carrierJsonUrl = "CarrierData";
+						$("#staticSPID").prop("readonly", true);
+						$("#staticName").prop("readonly", true);
+						var $radios = $("input:radio[name=carrierStatus]");
+						$radios.filter("[value=true]").prop("disabled", true);
+						$radios.filter("[value=false]").prop("disabled", true);
+						$("#EditCarrier").removeClass("btn-danger").addClass(
+								"btn-primary");
+						$("#EditCarrier").text("Editar");
+						$("#EditCarrier")
+								.on(
+										"click",
+										function(e) {
+											$("#staticName").removeAttr(
+													"readonly");
+											var $radios = $("input:radio[name=carrierStatus]");
+											$radios.filter("[value=true]")
+													.prop("disabled", false);
+											$radios.filter("[value=false]")
+													.prop("disabled", false);
+											$("#EditCarrier").removeClass(
+													"btn-primary").addClass(
+													"btn-danger");
+											$("#EditCarrier").text("Salvar");
+											$(this)
+													.on(
+															"click",
+															function() {
+																var CarrierEditUrl = "EditCarrier";
+																$
+																		.post(
+																				CarrierEditUrl,
+																				{
+																					spid : $(
+																							"#staticSPID")
+																							.val(),
+																					name : $(
+																							"#staticName")
+																							.val(),
+																					status : $(
+																							"input[type=radio][name=carrierStatus]:checked")
+																							.val()
+																				})
+																		.done(
+																				function(
+																						data) {
+																					$(
+																							"#carrierDetailModal")
+																							.modal(
+																									"toggle");
+																					$(
+																							"#mainTable")
+																							.trigger(
+																									"refresh");
+																					$(
+																							"carrierEditResultModal")
+																							.modal(
+																									"toggle");
+																				})
+																		.fail(
+																				function(
+																						data) {
+																					$(
+																							"#carrierDetailModal")
+																							.modal(
+																									"toggle");
+																					$(
+																							"#mainTable")
+																							.trigger(
+																									"refresh");
+																					$(
+																							"carrierEditResultModal")
+																							.modal(
+																									"toggle");
+																				});
+															});
+										});
+						$
+								.getJSON(carrierJsonUrl, {
+									spid : $(e.relatedTarget).data("spid")
+								})
+								.fail(
+										function(jqXHR, textStatus, errorThrown) {
+											alert("Falha na requisi&ccedil;o de Json de Operadora. \n Erro: "
+													+ textStatus);
+										})
+								.done(
+										function(data) {
+											var spid = null;
+											var name = null;
+											var status = null;
+											if (data != null) {
+												spid = data.Carrier.spid;
+												name = data.Carrier.name;
+												status = data.Carrier.status;
+												$("#HeaderLable").html(
+														"Detalhes de Prestadora - ["
+																+ spid + "]");
+												$("#staticSPID").val(spid);
+												$("#staticName").val(name);
+												var $radios = $('input:radio[name=carrierStatus]');
+												if ($radios.is(':checked') === false) {
+													if (status != null) {
+														if (status == "1") {
+															$radios
+																	.filter(
+																			'[value=true]')
+																	.prop(
+																			'checked',
+																			true);
+														} else {
+															$radios
+																	.filter(
+																			'[value=false]')
+																	.prop(
+																			'checked',
+																			true);
+														}
+													}
+												}
+											}
+										});
+					});
+
+	$('#ModalDeleteConfirm').on(
+			'show.bs.modal',
+			function(e) {
+				$("#DeleteConfirm").prop("onclick", null).off("click");
+				var spid = $(e.relatedTarget).data("spid");
+				$(this).find('.modal-title ').text(
+						"Confirmar exclusao do SPID " + spid + "?");
+				$("#DeleteConfirm").on("click", function() {
+					var CarrierDeleteUrl = "DeleteCarrier";
+					$.post(CarrierDeleteUrl, {
+						spid : spid
+					}).done(function(data) {
+						$("#ModalDeleteConfirm").modal("toggle");
+						$("#mainTable").trigger("refresh");
 						$("carrierEditResultModal").modal("toggle");
 					}).fail(function(data) {
-						$("#carrierDetailModal").modal("toggle");
-						$("#mainTable").trigger( "refresh");
+						$("#ModalDeleteConfirm").modal("toggle");
+						$("#mainTable").trigger("refresh");
 						$("carrierEditResultModal").modal("toggle");
 					});
+				});
 			});
-		});		
-		$.getJSON(carrierJsonUrl, 
-			{ spid: $(e.relatedTarget).data("spid")}	  
-			)
-			.fail(function(jqXHR, textStatus, errorThrown) { alert("Falha na requisi&ccedil;o de Json de Operadora. \n Erro: " + textStatus); })
-			.done(function( data ) {
-				var spid = null;
-				var name = null;
-				var status = null;
-				if (data != null) {
-					spid = data.Carrier.spid;
-					name = data.Carrier.name;
-					status = data.Carrier.status;
-					$("#HeaderLable").html("Detalhes de Prestadora - [" + spid + "]");
-					$("#staticSPID").val(spid);
-    				$("#staticName").val(name);
-    				var $radios = $('input:radio[name=carrierStatus]');
-    				if($radios.is(':checked') === false) {
-	    				if (status != null) {
-	    		    		if (status == "1") {
-    		    				$radios.filter('[value=true]').prop('checked', true);
-    		    			} else {
-		    		    		$radios.filter('[value=false]').prop('checked', true);
-    		    			}
-    		    		}    		        
-    				}
-				}
-			});
+
+	$(document)
+			.ready(
+					function() {
+						$("#UserHeader").text("Logado como: " + username);
+						var carrierListJsonUrl = "ListCarrier";
+						$('#mainTable')
+								.DataTable(
+										{
+											ajax : {
+												url : carrierListJsonUrl,
+												dataSrc : "Carrier"
+											},
+											columns : [
+													{
+														data : "spid"
+													},
+													{
+														data : "name"
+													},
+													{
+														data : "status",
+														"render" : function(
+																data, type,
+																row, meta) {
+															return type === 'display'
+																	&& data == "1" ? "<span class=\"badge badge-success\">ATIVA</span>"
+																	: "<span class=\"badge badge-danger\">INATIVA</span>";
+														}
+													},
+													{
+														data : null,
+														"render" : function(
+																data, type,
+																row, meta) {
+															return "<a href=\"#\" data-toggle=\"modal\" data-target=\"#carrierDetailModal\" data-spid=\"" + row.spid + "\"><span data-feather=\"edit\"></span></a><a href=\"#\" data-toggle=\"modal\" data-target=\"#ModalDeleteConfirm\" data-spid=\"" + row.spid + "\"><span data-feather=\"trash-2\"></span></a>";
+														}
+													}
+
+											],
+											columnDefs : [ {
+												width : "20%",
+												targets : 0
+											}, {
+												width : "30%",
+												targets : 1
+											}, {
+												width : "30%",
+												targets : 2
+											}, {
+												width : "20%",
+												targets : 3
+											} ],
+											"autoWidth" : false,
+											fixedColumns : true,
+											retrieve : true,
+											"language" : {
+												"search" : "Procurar:",
+												"paginate" : {
+													"first" : "Primeira Pagina",
+													"last" : "Ultima Pagina",
+													"next" : "Proxima",
+													"previous" : "Anterior"
+												},
+												"info" : "Exibindo pagina _PAGE_ de _PAGES_",
+												"infoFiltered" : " - filtrados de _MAX_ registros",
+												"sLengthMenu" : "Mostrar _MENU_ registros",
+											},
+											"drawCallback" : function() {
+												feather.replace();
+											}
+										});
+						$('.dataTables_length').addClass('bs-select');
+
+					});
+
+	$("#InsertCarrier").on("click", function() {
+		var CarrierInsertUrl = "InsertCarrier";
+		$.post(CarrierInsertUrl, {
+			spid : $("#insertSPID").val(),
+			name : $("#insertName").val(),
+			status : $("input[type=radio][name=insertStatus]:checked").val()
+		}).done(function(data) {
+			$("#insertCarrierModal").modal("toggle");
+			$("#mainTable").trigger("refresh");
+			$("carrierEditResultModal").modal("toggle");
+		}).fail(function(data) {
+			$("#insertCarrierModal").modal("toggle");
+			$("#mainTable").trigger("refresh");
+			$("carrierEditResultModal").modal("toggle");
+		});
 	});
-	
-    $('#ModalDeleteConfirm').on('show.bs.modal', function (e) {
-    	$("#DeleteConfirm").prop("onclick", null).off("click");
-    	var spid = $(e.relatedTarget).data("spid");
-        $(this).find('.modal-title ').text("Confirmar exclusao do SPID " + spid + "?");
-        $("#DeleteConfirm").on("click", function(){
-        	var CarrierDeleteUrl = "DeleteCarrier";
-        	$.post(CarrierDeleteUrl, { spid: spid})
-			.done(function(data) {
-				$("#ModalDeleteConfirm").modal("toggle");
-				$("#mainTable").trigger( "refresh");
-				$("carrierEditResultModal").modal("toggle");
-			}).fail(function(data) {
-				$("#ModalDeleteConfirm").modal("toggle");
-				$("#mainTable").trigger( "refresh");
-				$("carrierEditResultModal").modal("toggle");
-			});
-        });
-    });
-    
-    $(document).ready(function() {
-        $("#UserHeader").text("Logado como: " + username);
-        var carrierListJsonUrl = "ListCarrier";
-    	$('#mainTable').DataTable({ 
-    		ajax: {
-    		url: carrierListJsonUrl,
-    		dataSrc:"Carrier"
-    		},
-    		columns: [
-    			{data : "spid"},
-    			{data : "name"},
-    			{data : "status",
-    				"render": function ( data, type, row, meta ) {
-    					 return type === 'display' && data == "1" ?
-    							 "<span class=\"badge badge-success\">ATIVA</span>" :
-    							 "<span class=\"badge badge-danger\">INATIVA</span>";
-    					}
-    				},
-    			{data: null,
-    				"render": function	( data, type, row, meta ) {
-    					return "<a href=\"#\" data-toggle=\"modal\" data-target=\"#carrierDetailModal\" data-spid=\"" + row.spid + "\"><span data-feather=\"edit\"></span></a><a href=\"#\" data-toggle=\"modal\" data-target=\"#ModalDeleteConfirm\" data-spid=\"" + row.spid + "\"><span data-feather=\"trash-2\"></span></a>";
-    				}
-    			}
-    			
-    			],
-    		columnDefs: [
-    	    	{ width: "20%", targets: 0 },
-    	    	{ width: "30%", targets: 1 },
-    	    	{ width: "30%", targets: 2 },
-    	    	{ width: "20%", targets: 3 }
-    	    ],
-    	    "autoWidth": false,
-    	    fixedColumns: true,
-			retrieve: true,
-			"language": {
-				"search": "Procurar:",
-				"paginate": {
-				"first": "Primeira Pagina",
-				"last": "Ultima Pagina",
-				"next": "Proxima",
-				"previous": "Anterior"
-				 },
-			"info": "Exibindo pagina _PAGE_ de _PAGES_",
-			"infoFiltered": " - filtrados de _MAX_ registros",
-			"sLengthMenu": "Mostrar _MENU_ registros",
-  		},
-  		"drawCallback": function(){
-  			feather.replace();
-  		}
-    	});
-		$('.dataTables_length').addClass('bs-select');
-      
-    });
-    
-    $("#InsertCarrier").on("click", function(){
-    	var CarrierInsertUrl = "InsertCarrier";
-		$.post(CarrierInsertUrl, { spid: $("#insertSPID").val(), 
-				 name: $("#insertName").val(), 
-				 status: $( "input[type=radio][name=insertStatus]:checked" ).val()})
-			.done(function(data) {
-				$("#insertCarrierModal").modal("toggle");
-				$("#mainTable").trigger( "refresh");
-				$("carrierEditResultModal").modal("toggle");
-			}).fail(function(data) {
-				$("#insertCarrierModal").modal("toggle");
-				$("#mainTable").trigger( "refresh");
-				$("carrierEditResultModal").modal("toggle");
-			});
-    });
-    
-    $("#mainTable").on("refresh", function(e){
-    	$('#mainTable').DataTable().ajax.reload();
-    });
-    
-    $('#insertCarrierModal').on('show.bs.modal', function (e) {	
-    	$("#insertSPID").val("");
-    	$("#insertName").val("");
-    	$("input[type=radio][name=insertStatus]" ).prop("checked", false);
-    });
-    
-	</script>
+
+	$("#mainTable").on("refresh", function(e) {
+		$('#mainTable').DataTable().ajax.reload();
+	});
+
+	$('#insertCarrierModal').on('show.bs.modal', function(e) {
+		$("#insertSPID").val("");
+		$("#insertName").val("");
+		$("input[type=radio][name=insertStatus]").prop("checked", false);
+	});
+</script>
 
 

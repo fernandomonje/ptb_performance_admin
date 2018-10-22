@@ -11,34 +11,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 
+@WebServlet(urlPatterns = "/InsertCarrier")
+public class InsertCarrierServlet extends HttpServlet {
 
-@WebServlet (urlPatterns="/InsertCarrier")
-public class InsertCarrierServlet extends HttpServlet{
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 831376228153712209L;
 
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		req.getRequestDispatcher("/InsertCarrier.html").forward(req,resp);
-	
+		req.getRequestDispatcher("/InsertCarrier.html").forward(req, resp);
+
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String spid = req.getParameter("spid");
-        String name = req.getParameter("name");
-        String status_str = req.getParameter("status");
-        
-        boolean status = false;
-        if (status_str.equals("true")) {
-        	status = true;
-        }
+		String spid = req.getParameter("spid");
+		String name = req.getParameter("name");
+		String status_str = req.getParameter("status");
+
+		boolean status = false;
+
+		if (status_str.equals("true")) {
+			status = true;
+		}
 		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
 		boolean insert_status = myDao.insertCarrier(conn, spid, name, status);
@@ -47,17 +46,17 @@ public class InsertCarrierServlet extends HttpServlet{
 			ret_status = "true";
 		}
 		myDao.closeConnection(conn);
-		
+
 		String jsonReturn;
 		jsonReturn = "{\n";
 		jsonReturn += "	\"status\" : \"" + ret_status + "\",\n";
 		jsonReturn += "	\"spid\" : \"" + spid + "\"\n";
 		jsonReturn += "}";
-		
+
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
 		resp.getWriter().write(jsonReturn);
-	
+
 	}
 
 }

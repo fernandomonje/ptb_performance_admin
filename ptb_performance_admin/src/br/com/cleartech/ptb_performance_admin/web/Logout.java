@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @WebServlet(urlPatterns = "/Logout")
 public class Logout extends HttpServlet {
 
@@ -20,13 +19,10 @@ public class Logout extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().removeAttribute("username");
-		
+
 		req.setAttribute("messages", "Logout efetuado");
 		req.getRequestDispatcher("/Login.jsp").forward(req, resp);
-		
-		
+
 	}
-	
-	
-	
+
 }

@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 import br.com.cleartech.ptb_performance_admin.util.Carrier;
 
+@WebServlet(urlPatterns = "/ListCarrier")
+public class ListCarrierServlet extends HttpServlet {
 
-@WebServlet (urlPatterns="/ListCarrier")
-public class ListCarrierServlet extends HttpServlet{
-	
 	/**
 	 * 
 	 */
@@ -27,31 +26,31 @@ public class ListCarrierServlet extends HttpServlet{
 
 		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
-		List<Carrier> CarrierList = myDao.getCarrierList(conn); 
+		List<Carrier> CarrierList = myDao.getCarrierList(conn);
 		myDao.closeConnection(conn);
-		
+
 		String CarrierListJson = "{\n";
-		CarrierListJson +=       "	\"Carrier\": [\n";
-		for(int i = 0; i < CarrierList.size(); i++) {
-            Carrier carrier = new Carrier();
-            carrier = CarrierList.get(i);
-            CarrierListJson +=       "		{\n";
-            CarrierListJson +=       "			\"spid\": \"" + carrier.getSpid()+ "\",\n";
-            CarrierListJson +=       "			\"name\": \"" + carrier.getName() + "\",\n";
-            CarrierListJson +=       "			\"status\": \"" + carrier.getStatus() + "\"\n";
-            if(i == (CarrierList.size() - 1)) {
-            	CarrierListJson +=       "		}\n";
-            } else {
-            	CarrierListJson +=       "		},\n";
-            }
-            
+		CarrierListJson += "	\"Carrier\": [\n";
+		for (int i = 0; i < CarrierList.size(); i++) {
+			Carrier carrier = new Carrier();
+			carrier = CarrierList.get(i);
+			CarrierListJson += "		{\n";
+			CarrierListJson += "			\"spid\": \"" + carrier.getSpid() + "\",\n";
+			CarrierListJson += "			\"name\": \"" + carrier.getName() + "\",\n";
+			CarrierListJson += "			\"status\": \"" + carrier.getStatus() + "\"\n";
+			if (i == (CarrierList.size() - 1)) {
+				CarrierListJson += "		}\n";
+			} else {
+				CarrierListJson += "		},\n";
+			}
+
 		}
-		CarrierListJson +=       "	]\n";
-		CarrierListJson +=       "}\n";
+		CarrierListJson += "	]\n";
+		CarrierListJson += "}\n";
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
 		resp.getWriter().write(CarrierListJson);
-	
+
 	}
 
 }

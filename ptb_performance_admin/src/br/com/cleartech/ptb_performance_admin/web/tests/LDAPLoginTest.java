@@ -11,9 +11,9 @@ public class LDAPLoginTest {
 			auth_status = auth.authUser("gcardoso", "clt@2018");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
-			if(auth_status) {
+			if (auth_status) {
 				System.out.println("User authentication Successed.");
 			} else {
 				System.out.println("User authentication failed.");

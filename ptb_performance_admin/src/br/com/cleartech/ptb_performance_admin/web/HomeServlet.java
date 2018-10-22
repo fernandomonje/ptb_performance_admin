@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 import br.com.cleartech.ptb_performance_admin.util.Carrier;
 
+@WebServlet(urlPatterns = "/Home")
+public class HomeServlet extends HttpServlet {
 
-@WebServlet (urlPatterns="/Home")
-public class HomeServlet extends HttpServlet{
-	
 	/**
 	 * 
 	 */
@@ -25,8 +24,8 @@ public class HomeServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		req.getRequestDispatcher("/Home.jsp").forward(req,resp);
-	
+		req.getRequestDispatcher("/Home.jsp").forward(req, resp);
+
 	}
 
 }
