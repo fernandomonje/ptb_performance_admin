@@ -94,7 +94,56 @@
     
     $(document).ready(function() {
         $("#UserHeader").text("Logado como: " + username);
-        $("#mainTable").trigger( "refresh");
+        var carrierListJsonUrl = "ListCarrier";
+    	$('#mainTable').DataTable({ 
+    		ajax: {
+    		url: carrierListJsonUrl,
+    		dataSrc:"Carrier"
+    		},
+    		columns: [
+    			{data : "spid"},
+    			{data : "name"},
+    			{data : "status",
+    				"render": function ( data, type, row, meta ) {
+    					 return type === 'display' && data == "1" ?
+    							 "<span class=\"badge badge-success\">ATIVA</span>" :
+    							 "<span class=\"badge badge-danger\">INATIVA</span>";
+    					}
+    				},
+    			{data: null,
+    				"render": function	( data, type, row, meta ) {
+    					return "<a href=\"#\" data-toggle=\"modal\" data-target=\"#carrierDetailModal\" data-spid=\"" + row.spid + "\"><span data-feather=\"edit\"></span></a><a href=\"#\" data-toggle=\"modal\" data-target=\"#ModalDeleteConfirm\" data-spid=\"" + row.spid + "\"><span data-feather=\"trash-2\"></span></a>";
+    				}
+    			}
+    			
+    			],
+    		columnDefs: [
+    	    	{ width: "20%", targets: 0 },
+    	    	{ width: "30%", targets: 1 },
+    	    	{ width: "30%", targets: 2 },
+    	    	{ width: "20%", targets: 3 }
+    	    ],
+    	    "autoWidth": false,
+    	    fixedColumns: true,
+			retrieve: true,
+			"language": {
+				"search": "Procurar:",
+				"paginate": {
+				"first": "Primeira Pagina",
+				"last": "Ultima Pagina",
+				"next": "Proxima",
+				"previous": "Anterior"
+				 },
+			"info": "Exibindo pagina _PAGE_ de _PAGES_",
+			"infoFiltered": " - filtrados de _MAX_ registros",
+			"sLengthMenu": "Mostrar _MENU_ registros",
+  		},
+  		"drawCallback": function(){
+  			feather.replace();
+  		}
+    	});
+		$('.dataTables_length').addClass('bs-select');
+      
     });
     
     $("#InsertCarrier").on("click", function(){
@@ -114,44 +163,7 @@
     });
     
     $("#mainTable").on("refresh", function(e){
-    	var carrierListJsonUrl = "ListCarrier";
-    	$("#mainTable > tbody").empty();
-    	$.getJSON(carrierListJsonUrl)
-    			.fail(function(jqXHR, textStatus, errorThrown) { alert("Falha na requisicao de Json de Operadora. \n Erro: " + textStatus); })
-    			.done(function( data ) {
-    				if (data != null) {
-    					var status_str;
-        				$.each(data.Carrier, function() {
-        					  if (this.status == "1") {
-        						status_str="<span class=\"badge badge-success\">ATIVA</span>";
-           					  } else {
-        						status_str="<span class=\"badge badge-danger\">INATIVA</span>";
-        					  }
-        					  $("#mainTable > tbody").append("<tr><td>" + this.spid + 
-        							  "</td><td>" + this.name + "</td><td>" + status_str + 
-        							  "</td><td><a href=\"#\" data-toggle=\"modal\" data-target=\"#carrierDetailModal\" data-spid=\"" + this.spid + 
-        							  "\"><span data-feather=\"edit\"></span></a><a href=\"#\" data-toggle=\"modal\" data-target=\"#ModalDeleteConfirm\" data-spid=\""+ this.spid + 
-        							  "\"><span data-feather=\"trash-2\"></span></a></td></tr>");
-        				});
-        				feather.replace()
-        				$('#mainTable').DataTable({
-        							  "language": {
-        							    "search": "Procurar:",
-        							    "paginate": {
-        							        "first": "Primeira Pagina",
-        							        "last": "Ultima Pagina",
-        							        "next": "Proxima",
-        							        "previous": "Anterior"
-        							      },
-        							      "info": "Exibindo pagina _PAGE_ de _PAGES_",
-        							      "infoFiltered": " - filtrados de _MAX_ registros",
-        							      "sLengthMenu": "Mostrar _MENU_ registros",
-        							  }
-        							});
-				
-        		        $('.dataTables_length').addClass('bs-select');
-    				}
-    			});
+    	$('#mainTable').DataTable().ajax.reload();
     });
     
     $('#insertCarrierModal').on('show.bs.modal', function (e) {	
