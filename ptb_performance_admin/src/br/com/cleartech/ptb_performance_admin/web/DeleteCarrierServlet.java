@@ -36,6 +36,7 @@ public class DeleteCarrierServlet extends HttpServlet {
 		String ret_status = "false";
 		if (delete_status) {
 			ret_status = "true";
+			myDao.logAction(conn, spid, (String) req.getSession().getAttribute("username"), 3);
 		}
 		myDao.closeConnection(conn);
 

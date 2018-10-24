@@ -73,6 +73,7 @@ public class EditCarrierServlet extends HttpServlet {
 		}
 		if (update_status) {
 			ret_status = "true";
+			myDao.logAction(conn,spid, (String) req.getSession().getAttribute("username"), 2);
 		}
 		myDao.closeConnection(conn);
 		String jsonReturn;

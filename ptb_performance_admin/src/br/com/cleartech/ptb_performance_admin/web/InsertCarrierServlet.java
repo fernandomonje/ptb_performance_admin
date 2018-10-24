@@ -44,6 +44,7 @@ public class InsertCarrierServlet extends HttpServlet {
 		String ret_status = "false";
 		if (insert_status) {
 			ret_status = "true";
+			myDao.logAction(conn, spid,  (String) req.getSession().getAttribute("username"), 1);
 		}
 		myDao.closeConnection(conn);
 

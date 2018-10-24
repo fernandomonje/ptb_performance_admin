@@ -1,6 +1,7 @@
 package br.com.cleartech.ptb_performance_admin.web;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.cleartech.ptb_performance_admin.dao.OracleDAO;
 import br.com.cleartech.ptb_performance_admin.util.LoginLDAP;
 
 @WebServlet("/Login")
@@ -55,6 +57,10 @@ public class LoginServlet extends HttpServlet {
 			if (auth_status) {
 				request.getSession().setAttribute("username", username);
 				request.getSession().setMaxInactiveInterval(600);
+				OracleDAO myDAO = new OracleDAO();
+				Connection conn = myDAO.getConnection();
+				myDAO.logAction(conn, username, 10);
+				myDAO.closeConnection(conn);
 				response.sendRedirect(request.getContextPath() + "/Home");
 				return;
 			} else {

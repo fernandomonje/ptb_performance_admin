@@ -22,10 +22,7 @@
 <script>
 	var username = "<%=request.getSession().getAttribute("username")%>";
 
-	$('#carrierDetailModal')
-			.on(
-					'show.bs.modal',
-					function(e) {
+	$('#carrierDetailModal').on('show.bs.modal',function(e) {
 						$("#EditCarrier").off("click");
 						var carrierJsonUrl = "CarrierData";
 						$("#staticSPID").prop("readonly", true);
@@ -33,88 +30,40 @@
 						var $radios = $("input:radio[name=carrierStatus]");
 						$radios.filter("[value=true]").prop("disabled", true);
 						$radios.filter("[value=false]").prop("disabled", true);
-						$("#EditCarrier").removeClass("btn-danger").addClass(
-								"btn-primary");
+						$("#EditCarrier").removeClass("btn-danger").addClass("btn-primary");
 						$("#EditCarrier").text("Editar");
-						$("#EditCarrier")
-								.on(
-										"click",
-										function(e) {
-											$("#staticName").removeAttr(
-													"readonly");
+						$("#EditCarrier").on("click",function(e) {
+											$("#staticName").removeAttr("readonly");
 											var $radios = $("input:radio[name=carrierStatus]");
-											$radios.filter("[value=true]")
-													.prop("disabled", false);
-											$radios.filter("[value=false]")
-													.prop("disabled", false);
-											$("#EditCarrier").removeClass(
-													"btn-primary").addClass(
-													"btn-danger");
+											$radios.filter("[value=true]").prop("disabled", false);
+											$radios.filter("[value=false]").prop("disabled", false);
+											$("#EditCarrier").removeClass("btn-primary").addClass("btn-danger");
 											$("#EditCarrier").text("Salvar");
-											$(this)
-													.on(
-															"click",
-															function() {
+											$(this).on("click",	function() {
 																var CarrierEditUrl = "EditCarrier";
-																$
-																		.post(
-																				CarrierEditUrl,
-																				{
-																					spid : $(
-																							"#staticSPID")
-																							.val(),
-																					name : $(
-																							"#staticName")
-																							.val(),
-																					status : $(
-																							"input[type=radio][name=carrierStatus]:checked")
-																							.val()
-																				})
-																		.done(
-																				function(
-																						data) {
-																					$(
-																							"#carrierDetailModal")
-																							.modal(
-																									"toggle");
-																					$(
-																							"#mainTable")
-																							.trigger(
-																									"refresh");
-																					$(
-																							"carrierEditResultModal")
-																							.modal(
-																									"toggle");
-																				})
-																		.fail(
-																				function(
-																						data) {
-																					$(
-																							"#carrierDetailModal")
-																							.modal(
-																									"toggle");
-																					$(
-																							"#mainTable")
-																							.trigger(
-																									"refresh");
-																					$(
-																							"carrierEditResultModal")
-																							.modal(
-																									"toggle");
-																				});
-															});
-										});
-						$
-								.getJSON(carrierJsonUrl, {
+																$.post(CarrierEditUrl,{
+																					spid : $("#staticSPID").val(),
+																					name : $("#staticName").val(),
+																					status : $("input[type=radio][name=carrierStatus]:checked").val()
+																		})
+																		.done(function(data) {
+																					$("#carrierDetailModal").modal("toggle");
+																					$("#mainTable").trigger("refresh");
+																					$("carrierEditResultModal").modal("toggle");
+																		})
+																		.fail(function(data) {
+																					$("#carrierDetailModal").modal("toggle");
+																					$("#mainTable").trigger("refresh");
+																					$("carrierEditResultModal").modal("toggle");
+																		});
+											});
+						});
+						$.getJSON(carrierJsonUrl, {
 									spid : $(e.relatedTarget).data("spid")
 								})
-								.fail(
-										function(jqXHR, textStatus, errorThrown) {
-											alert("Falha na requisi&ccedil;o de Json de Operadora. \n Erro: "
-													+ textStatus);
-										})
-								.done(
-										function(data) {
+								.fail(function(jqXHR, textStatus, errorThrown) {alert("Falha na requisi&ccedil;o de Json de Operadora. \n Erro: " + textStatus);
+								})
+								.done(function(data) {
 											var spid = null;
 											var name = null;
 											var status = null;
@@ -122,33 +71,69 @@
 												spid = data.Carrier.spid;
 												name = data.Carrier.name;
 												status = data.Carrier.status;
-												$("#HeaderLable").html(
-														"Detalhes de Prestadora - ["
-																+ spid + "]");
+												$("#HeaderLable").html("Detalhes de Prestadora - [" + spid + "]");
 												$("#staticSPID").val(spid);
 												$("#staticName").val(name);
 												var $radios = $('input:radio[name=carrierStatus]');
 												if ($radios.is(':checked') === false) {
 													if (status != null) {
 														if (status == "1") {
-															$radios
-																	.filter(
-																			'[value=true]')
-																	.prop(
-																			'checked',
-																			true);
+															$radios.filter('[value=true]').prop('checked',true);
 														} else {
-															$radios
-																	.filter(
-																			'[value=false]')
-																	.prop(
-																			'checked',
-																			true);
+															$radios.filter('[value=false]').prop('checked',true);
 														}
 													}
 												}
 											}
-										});
+								});
+						$("#MeasurementPrimaryTable > tbody").empty();
+						$("#MeasurementPrimaryTable > tbody").append("<tr><td colspan=\"5\" align=\"center\">No Data</td></tr>");
+						$("#MeasurementSecondaryTable > tbody").empty();
+						$("#MeasurementSecondaryTable > tbody").append("<tr><td colspan=\"5\" align=\"center\">No Data</td></tr>");
+						var MeasurementDataUrl = "CarrierMeasurementList"
+						$.getJSON(MeasurementDataUrl, {
+							spid : $(e.relatedTarget).data("spid"),
+							environment : "primary"
+						})
+						.fail(function(jqXHR, textStatus, errorThrown) {alert("Falha na requisicao de Json de Measurements. \n Erro: " + textStatus);
+						})
+						.done(function(data) {
+							var spid = $(e.relatedTarget).data("spid");
+							if (data != null) {
+								if (!data[spid]){
+									$("#MeasurementPrimaryTable > tbody").empty();
+									$.each(data.Measurement[spid], function() {
+										$("#MeasurementPrimaryTable > tbody").append("<tr><td>" + this.datetime +
+												"</td><td>" + this.download_bandwidth + 
+												"</td><td>" + this.upload_bandwidth +
+												"</td><td>" + this.ping_response_time +
+												"</td><td>" + Math.floor(this.ping_packet_loss * 100) + "%</td></tr>")
+		         					});
+								}
+							}
+						});
+						$.getJSON(MeasurementDataUrl, {
+							spid : $(e.relatedTarget).data("spid"),
+							environment : "secondary"
+						})
+						.fail(function(jqXHR, textStatus, errorThrown) {alert("Falha na requisicao de Json de Measurements. \n Erro: " + textStatus);
+						})
+						.done(function(data) {
+							var spid = $(e.relatedTarget).data("spid");
+							if (data != null) {
+								if (!data[spid]){
+									$("#MeasurementSecondaryTable > tbody").empty();
+									$.each(data.Measurement[spid], function() {
+										$("#MeasurementSecondaryTable > tbody").append("<tr><td>" + this.datetime +
+												"</td><td>" + this.download_bandwidth + 
+												"</td><td>" + this.upload_bandwidth +
+												"</td><td>" + this.ping_response_time +
+												"</td><td>" + Math.floor(this.ping_packet_loss * 100) + "%</td></tr>")
+		         					});
+								}
+							}
+						});
+						
 					});
 
 	$('#ModalDeleteConfirm').on(

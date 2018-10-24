@@ -102,3 +102,11 @@ body {
 #mainTable {
 	width:100%;
 }
+
+#MeasurementPrimaryTable {
+	font-size: 10px;
+}
+
+#MeasurementSecondaryTable {
+	font-size: 10px;
+}

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.cleartech.ptb_performance_admin.util.Carrier;
+import br.com.cleartech.ptb_performance_admin.util.Measurement;
 
 public class OracleDAO {
 
@@ -283,5 +284,125 @@ public class OracleDAO {
 		return null;
 
 	}
-
+	
+	public List<Measurement> getCarrierMeasurements(Connection conn, String spid, String environment) {
+		PreparedStatement pstmt = null;
+		List<Measurement> measurementList = new  ArrayList<Measurement>();
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM (SELECT * FROM PTB_MEASURE_DATA WHERE SPID = ? AND ENVIRONMENT = ? ORDER BY DATETIME DESC) WHERE ROWNUM < ?");
+			pstmt.setString(1, spid);
+			pstmt.setString(2, environment);
+			pstmt.setInt(3, 4);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Measurement measurement = new Measurement();
+				measurement.setSpid(rs.getString("SPID"));
+				measurement.setDateTime(rs.getTimestamp("DATETIME"));
+				measurement.setUploadBandwidth(rs.getFloat("UPLOAD_BANDWIDTH"));
+				measurement.setDownloadBandwidth(rs.getFloat("DOWNLOAD_BANDWIDTH"));
+				measurement.setPingResponseTime(rs.getFloat("PING_RESPONSE_TIME"));
+				measurement.setPingPacketLoss(rs.getFloat("PING_PACKET_LOSS"));
+				measurement.setEnvironment(rs.getString("ENVIRONMENT"));
+				measurementList.add(measurement);
+			}
+			
+		} catch (SQLException e) {
+			// TODO - Create Better error desc
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (pstmt != null) {
+				// Close the statement
+				try {
+					pstmt.close();
+					if (measurementList.isEmpty()) {
+						return null;
+					} else {
+						return measurementList;
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public boolean logAction(Connection conn, String spid, String username, int actionId) {
+		/*
+		 * actionId - Refers to the actionId located at the action domain table.
+		 * values:
+		 * 1 - Insert new Carrier/SPID
+		 * 2 - Edit Carrier/SPID
+		 * 3 - Delete Carrier/SPID
+		 * 10 - User Log in
+		 * 11 - User Log out
+		 * 
+		 */
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO PTB_MEASURE_ACTION_LOG (TIMESTAMP, USERNAME, ACTION_ID, SPID) VALUES (SYSDATE, ?, ?, ?)");
+			pstmt.setString(1, username);
+			pstmt.setInt(2, actionId);
+			pstmt.setString(3, spid);
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO - Create Better error desc
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (pstmt != null) {
+				// Close the statement
+				try {
+					pstmt.close();
+					return true;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+		
+	public boolean logAction(Connection conn, String username, int actionId) {
+		/*
+		 * actionId - Refers to the actionId located at the action domain table.
+		 * values:
+		 * 1 - Insert new Carrier/SPID
+		 * 2 - Edit Carrier/SPID
+		 * 3 - Delete Carrier/SPID
+		 * 10 - User Log in
+		 * 11 - User Log out
+		 * 
+		 */
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO PTB_MEASURE_ACTION_LOG (TIMESTAMP, USERNAME, ACTION_ID) VALUES (SYSDATE, ?, ?)");
+			pstmt.setString(1, username);
+			pstmt.setInt(2, actionId);
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO - Create Better error desc
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (pstmt != null) {
+				// Close the statement
+				try {
+					pstmt.close();
+					return true;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+		
 }
