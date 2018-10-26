@@ -253,13 +253,13 @@
 	function checkSession() {
 	    var sessionExpiry = Math.abs(getCookie('sessionExpiry'));
 	    var expDate = new Date(sessionExpiry);
-	    console.log(expDate);
 	    var timeOffset = Math.abs(getCookie('clientTimeOffset'));
 	    var localTime = (new Date()).getTime();
 	    if (localTime - timeOffset > (sessionExpiry+15000)) { // 15 extra seconds to make sure
 	    	sessionActive = false;
 	    	$("#UserHeader").append(" [Sessao Expirada]");
 	        console.log("Session Expired.");
+	        document.location.href = "Login";
 	    } else {
 	        setTimeout('checkSession()', 10000);
 	    }
