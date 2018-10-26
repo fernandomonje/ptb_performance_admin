@@ -1,27 +1,4 @@
-
-<!-- Principal JavaScript do Bootstrap
-    ================================================== -->
-<!-- Foi colocado no final para a página carregar mais rápido -->
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-	crossorigin="anonymous"></script>
-<script
-	src="https:////cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
-	crossorigin="anonymous"></script>
-
-<!-- Ícones -->
-<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-<script>
-	var username = "<%=request.getSession().getAttribute("username")%>";
-
+	var sessionActive = true;
 	$('#carrierDetailModal').on('show.bs.modal',function(e) {
 						$("#EditCarrier").off("click");
 						var carrierJsonUrl = "CarrierData";
@@ -61,7 +38,13 @@
 						$.getJSON(carrierJsonUrl, {
 									spid : $(e.relatedTarget).data("spid")
 								})
-								.fail(function(jqXHR, textStatus, errorThrown) {alert("Falha na requisi&ccedil;o de Json de Operadora. \n Erro: " + textStatus);
+								.fail(function(jqXHR, textStatus, errorThrown) {
+									if (sessionActive) {
+										alert("Falha na requisicao de Json de Operadora. \n Erro: " + textStatus);
+									} else {
+										alert("Sessao Expirada, voce sera redirecionado para a tela de Login.");
+										document.location.href = "Login";
+									}
 								})
 								.done(function(data) {
 											var spid = null;
@@ -95,7 +78,13 @@
 							spid : $(e.relatedTarget).data("spid"),
 							environment : "primary"
 						})
-						.fail(function(jqXHR, textStatus, errorThrown) {alert("Falha na requisicao de Json de Measurements. \n Erro: " + textStatus);
+						.fail(function(jqXHR, textStatus, errorThrown) {
+							if (sessionActive) {
+								alert("Falha na requisicao de Json de Measurements. \n Erro: " + textStatus);
+							} else {
+								alert("Sessao Expirada, voce sera redirecionado para a tela de Login.");
+								document.location.href = "Login";
+							}
 						})
 						.done(function(data) {
 							var spid = $(e.relatedTarget).data("spid");
@@ -116,7 +105,14 @@
 							spid : $(e.relatedTarget).data("spid"),
 							environment : "secondary"
 						})
-						.fail(function(jqXHR, textStatus, errorThrown) {alert("Falha na requisicao de Json de Measurements. \n Erro: " + textStatus);
+						.fail(function(jqXHR, textStatus, errorThrown) {
+							if (sessionActive) {
+								alert("Falha na requisicao de Json de Measurements. \n Erro: " + textStatus);	
+							} else {
+								alert("Sessao Expirada, voce sera redirecionado para a tela de Login.");
+								document.location.href = "Login";
+							}
+							
 						})
 						.done(function(data) {
 							var spid = $(e.relatedTarget).data("spid");
@@ -159,80 +155,66 @@
 				});
 			});
 
-	$(document)
-			.ready(
-					function() {
-						$("#UserHeader").text("Logado como: " + username);
-						var carrierListJsonUrl = "ListCarrier";
-						$('#mainTable')
-								.DataTable(
-										{
-											ajax : {
-												url : carrierListJsonUrl,
-												dataSrc : "Carrier"
-											},
-											columns : [
-													{
-														data : "spid"
-													},
-													{
-														data : "name"
-													},
-													{
-														data : "status",
-														"render" : function(
-																data, type,
-																row, meta) {
-															return type === 'display'
-																	&& data == "1" ? "<span class=\"badge badge-success\">ATIVA</span>"
-																	: "<span class=\"badge badge-danger\">INATIVA</span>";
-														}
-													},
-													{
-														data : null,
-														"render" : function(
-																data, type,
-																row, meta) {
-															return "<a href=\"#\" data-toggle=\"modal\" data-target=\"#carrierDetailModal\" data-spid=\"" + row.spid + "\"><span data-feather=\"edit\"></span></a><a href=\"#\" data-toggle=\"modal\" data-target=\"#ModalDeleteConfirm\" data-spid=\"" + row.spid + "\"><span data-feather=\"trash-2\"></span></a>";
-														}
-													}
-
-											],
-											columnDefs : [ {
-												width : "20%",
-												targets : 0
-											}, {
-												width : "30%",
-												targets : 1
-											}, {
-												width : "30%",
-												targets : 2
-											}, {
-												width : "20%",
-												targets : 3
-											} ],
-											"autoWidth" : false,
-											fixedColumns : true,
-											retrieve : true,
-											"language" : {
-												"search" : "Procurar:",
-												"paginate" : {
-													"first" : "Primeira Pagina",
-													"last" : "Ultima Pagina",
-													"next" : "Proxima",
-													"previous" : "Anterior"
-												},
-												"info" : "Exibindo pagina _PAGE_ de _PAGES_",
-												"infoFiltered" : " - filtrados de _MAX_ registros",
-												"sLengthMenu" : "Mostrar _MENU_ registros",
-											},
-											"drawCallback" : function() {
-												feather.replace();
+	$(document).ready(function() {
+		var carrierListJsonUrl = "ListCarrier";
+		$('#mainTable').DataTable({
+						ajax : {
+							url : carrierListJsonUrl,
+							dataSrc : "Carrier"
+						},
+						columns : [
+							{data : "spid"},
+							{data : "name"},
+							{data : "status",
+								"render" : function(data, type, row, meta) {
+												return type === 'display' && data == "1" ? 
+													"<span class=\"badge badge-success\">ATIVA</span>"
+													: "<span class=\"badge badge-danger\">INATIVA</span>";
+												}
+							},
+							{data : null,
+								"render" : function(data, type, row, meta) {
+												return "<a href=\"#\" data-toggle=\"modal\" data-target=\"#carrierDetailModal\" data-spid=\"" + row.spid + "\"><span data-feather=\"edit\"></span></a><a href=\"#\" data-toggle=\"modal\" data-target=\"#ModalDeleteConfirm\" data-spid=\"" + row.spid + "\"><span data-feather=\"trash-2\"></span></a>";
 											}
-										});
-						$('.dataTables_length').addClass('bs-select');
-
-					});
+							}],
+						columnDefs : [ {
+								width : "20%",
+								targets : 0 },
+								{ 
+								width : "30%",
+								targets : 1
+								}, 
+								{
+								width : "30%",
+								targets : 2
+								}, 
+								{
+								width : "20%",
+								targets : 3
+								} ],
+						"autoWidth" : false,
+						fixedColumns : true,
+						retrieve : true,
+						"language" : {
+							"search" : "Procurar:",
+							"paginate" : {
+								"first" : "Primeira Pagina",
+								"last" : "Ultima Pagina",
+								"next" : "Proxima",
+								"previous" : "Anterior"
+							},
+							"info" : "Exibindo pagina _PAGE_ de _PAGES_",
+							"infoFiltered" : " - filtrados de _MAX_ registros",
+							"sLengthMenu" : "Mostrar _MENU_ registros",
+						},
+						"drawCallback" : function() {
+							feather.replace();
+						}
+		});
+		$('.dataTables_length').addClass('bs-select');
+		calcOffset();
+		checkSession();
+	});
 
 	$("#InsertCarrier").on("click", function() {
 		var CarrierInsertUrl = "InsertCarrier";
@@ -260,6 +242,43 @@
 		$("#insertName").val("");
 		$("input[type=radio][name=insertStatus]").prop("checked", false);
 	});
-</script>
+	
+	function calcOffset() {
+	    var serverTime = getCookie('serverTime');
+	    serverTime = serverTime==null ? null : Math.abs(serverTime);
+	    var clientTimeOffset = (new Date()).getTime() - serverTime;
+	    setCookie('clientTimeOffset', clientTimeOffset);
+	}
+	
+	function checkSession() {
+	    var sessionExpiry = Math.abs(getCookie('sessionExpiry'));
+	    var expDate = new Date(sessionExpiry);
+	    console.log(expDate);
+	    var timeOffset = Math.abs(getCookie('clientTimeOffset'));
+	    var localTime = (new Date()).getTime();
+	    if (localTime - timeOffset > (sessionExpiry+15000)) { // 15 extra seconds to make sure
+	    	sessionActive = false;
+	    	$("#UserHeader").append(" [Sessao Expirada]");
+	        console.log("Session Expired.");
+	    } else {
+	        setTimeout('checkSession()', 10000);
+	    }
+	};
+	
+	function getCookie(cname) {
+	     var name = cname + "=";
+	     var ca = document.cookie.split(';');
+	     for(var i=0; i<ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0)==' ') c = c.substring(1);
+	        if(c.indexOf(name) == 0)
+	           return c.substring(name.length,c.length);
+	     }
+	     return "";
+	}
+	
+	function setCookie(cname, cvalue) {
+        document.cookie = cname + "=" + cvalue + "; ";
+    }
 
-
+	

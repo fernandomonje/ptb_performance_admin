@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,16 +22,33 @@ public class LoginFilter implements Filter {
 			throws ServletException, IOException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
+	
 		boolean isStaticResource = request.getRequestURI().startsWith(request.getContextPath() + "/resources/");
 		String loginURI = request.getContextPath() + "/Login";
 
 		boolean loggedIn = session != null && session.getAttribute("username") != null;
 		boolean loginRequest = request.getRequestURI().equals(loginURI);
-
+		long currTime = System.currentTimeMillis();
+		Cookie cookie = new Cookie("serverTime", "" + currTime);
+	    cookie.setPath("/");
+	    response.addCookie(cookie);
 		if (loggedIn || loginRequest || isStaticResource) {
+			if (loggedIn) {
+				long expiryTime = currTime + (session.getMaxInactiveInterval() * 1000);
+		        cookie = new Cookie("sessionExpiry", "" + expiryTime);
+				cookie.setPath("/");
+			    response.addCookie(cookie);
+			} else {
+				cookie = new Cookie("sessionExpiry", "" + currTime);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			}
 			chain.doFilter(request, response);
 		} else {
+			cookie = new Cookie("sessionExpiry", "" + currTime);
+			cookie.setPath("/");
+			response.addCookie(cookie);
 			response.sendRedirect(loginURI);
 		}
 	}

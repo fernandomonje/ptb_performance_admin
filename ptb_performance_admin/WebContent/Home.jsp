@@ -25,7 +25,7 @@
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
 	crossorigin="anonymous">
-<link href="resources/dashboard.css" rel="stylesheet">
+<link href="resources/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
 	<!-- This page is build using all the includes defined in this file, the design was done in this way
@@ -35,22 +35,22 @@
 
 
 	<!-- Including header and navigation bar -->
-	<%@include file="resources/mainHeader_Nav.html"%>
+	<%@include file="resources/includes/mainHeader_Nav.html"%>
 
 	<!-- Including main table -->
-	<%@include file="resources/mainTable.html"%>
+	<%@include file="resources/includes/mainTable.html"%>
 
 	<!-- Including delete modal -->
-	<%@include file="resources/confirmDeleteModal.html"%>
+	<%@include file="resources/includes/confirmDeleteModal.html"%>
 
 	<!-- Including carrier detail modal -->
-	<%@include file="resources/carrierDetailModal.html"%>
+	<%@include file="resources/includes/carrierDetailModal.html"%>
 
 	<!-- Including Insert Carrier modal -->
-	<%@include file="resources/insertCarrierModal.html"%>
+	<%@include file="resources/includes/insertCarrierModal.html"%>
 
 	<!-- Including all the required scripts -->
-	<%@include file="resources/defaulScripts.html"%>
+	<%@include file="resources/includes/defaulScripts.html"%>
 
 </body>
 </html>

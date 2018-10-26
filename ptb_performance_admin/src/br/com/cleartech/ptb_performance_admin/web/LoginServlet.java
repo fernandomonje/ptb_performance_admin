@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean auth_status = false;
+		request.getSession().setMaxInactiveInterval(60);
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		Map<String, String> messages = new HashMap<String, String>();
@@ -56,7 +57,6 @@ public class LoginServlet extends HttpServlet {
 
 			if (auth_status) {
 				request.getSession().setAttribute("username", username);
-				request.getSession().setMaxInactiveInterval(600);
 				OracleDAO myDAO = new OracleDAO();
 				Connection conn = myDAO.getConnection();
 				myDAO.logAction(conn, username, 10);
