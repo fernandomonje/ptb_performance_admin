@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean auth_status = false;
-		request.getSession().setMaxInactiveInterval(60);
+		request.getSession().setMaxInactiveInterval(600);
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		Map<String, String> messages = new HashMap<String, String>();
