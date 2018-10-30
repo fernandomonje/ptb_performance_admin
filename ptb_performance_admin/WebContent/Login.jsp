@@ -19,9 +19,11 @@
 <body class="text-center">
 
 
-
+<div class="form-signin shadow border border-primary rounded bg-light text-white">
 	<form action="Login" method="POST" class="form-signin">
-		<h1 class="h3 mb-3 font-weight-normal">PTB Performance Admin</h1>
+		<div class="position: absolute">
+		<h4 class="h4 font-weight-normal text-secondary">PTB Performance Admin</h4>
+		</div>
 		<label for="username" class="sr-only">Usu&aacute;rio</label> <input
 			type="text" id="username" name="username" class="form-control"
 			placeholder="Usuario de Rede" required autofocus> <label
@@ -65,7 +67,8 @@
 		%>
 
 	</form>
+	<img src="resources/includes/ctech_logo_black_no_bg.png" style="width: 75px; height: 30px;opacity: 0.5;">
 
-
+</div>
 </body>
 </html>

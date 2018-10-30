@@ -25,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = (String) req.getSession().getAttribute("username");
 		Map<String,String> message = new HashMap<String,String>();
-		message.put("login", "Logout efetuado");
+		message.put("login", "Usu&aacute;rio deslogado");
 		req.setAttribute("messages", message);
 		OracleDAO myDao = new OracleDAO();
 		Connection conn = myDao.getConnection();
