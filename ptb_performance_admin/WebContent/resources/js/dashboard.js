@@ -95,7 +95,7 @@
 										$("#MeasurementPrimaryTable > tbody").append("<tr><td>" + this.datetime +
 												"</td><td>" + this.download_bandwidth + 
 												"</td><td>" + this.upload_bandwidth +
-												"</td><td>" + this.ping_response_time +
+												"</td><td>" + Math.trunc(this.ping_response_time) +
 												"</td><td>" + Math.floor(this.ping_packet_loss * 100) + "%</td></tr>")
 		         					});
 								}
@@ -123,7 +123,7 @@
 										$("#MeasurementSecondaryTable > tbody").append("<tr><td>" + this.datetime +
 												"</td><td>" + this.download_bandwidth + 
 												"</td><td>" + this.upload_bandwidth +
-												"</td><td>" + this.ping_response_time +
+												"</td><td>" + Math.trunc(this.ping_response_time) +
 												"</td><td>" + Math.floor(this.ping_packet_loss * 100) + "%</td></tr>")
 		         					});
 								}
