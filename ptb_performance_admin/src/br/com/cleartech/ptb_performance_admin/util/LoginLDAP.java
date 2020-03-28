@@ -9,12 +9,12 @@ public class LoginLDAP {
 	private String principalName;
 	private String domainName;
 	private boolean userAuth;
-	private final String securityGroup = "Cleartech";
+	private final String securityGroup = "xxxxx";
 
 	public LoginLDAP() {
 		this.userAuth = false;
-		this.LDAPUrl = "ldaps://saopaulo.ctech.local:3269";
-		this.domainName = "ctech.local";
+		this.LDAPUrl = "ldaps://xxxxx:3269";
+		this.domainName = "xxxxx";
 
 		if (this.domainName == null || "".equals(this.domainName)) {
 			int delim = this.principalName.indexOf('@');
