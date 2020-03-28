@@ -8,7 +8,7 @@ public class LDAPLoginTest {
 		LoginLDAP auth = new LoginLDAP();
 		boolean auth_status = false;
 		try {
-			auth_status = auth.authUser("gcardoso", "clt@2018");
+			auth_status = auth.authUser("xxxxx", "xxxxx");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
