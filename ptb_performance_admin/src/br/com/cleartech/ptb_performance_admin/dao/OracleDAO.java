@@ -15,11 +15,11 @@ import br.com.cleartech.ptb_performance_admin.util.Measurement;
 
 public class OracleDAO {
 
-	private final String db_user = "scada";
-	private final String db_pass = "sca#0406";
-	private final String db_host = "smcx5db01-vip";
+	private final String db_user = "xxxx";
+	private final String db_pass = "xxxxx";
+	private final String db_host = "xxxx";
 	private final String db_port = "1521";
-	private final String db_service = "compp";
+	private final String db_service = "xxxxx";
 
 	public Connection getConnection() {
 
